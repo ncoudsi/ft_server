@@ -2,7 +2,6 @@
 
 #Creates site's directory.
 mkdir	/var/www/localhost
-mv		tests/info.php /var/www/localhost
 
 #Copy configuration in Nginx's directory.
 cp nginx/nginx.conf /etc/nginx/sites-available/localhost
