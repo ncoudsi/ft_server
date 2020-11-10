@@ -26,4 +26,4 @@ COPY		srcs /root/
 WORKDIR		/root/
 
 #Specify wich script to run when starting the container.
-ENTRYPOINT	["bash", "container_setup.sh"]
+ENTRYPOINT	["bash", "scripts/container_setup.sh"]
