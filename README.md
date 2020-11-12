@@ -51,8 +51,8 @@ At this point, you have installed all the packages you need to run your containe
 You will find all the docker commands here : <br/>
 https://docs.docker.com/engine/reference/commandline/docker/ <br/>
 Note that, for the time being, you will only need : <br/>
-`docker build (check option -t)` <br/>
-`docker run (check options -t -i and eventually -p)` <br/>
+`docker build` (check option -t) <br/>
+`docker run` (check options -t -i and eventually -p) <br/>
 You can add to these (for more uses) : <br/>
 `docker ps` <br/>
 `docker exec` <br/>
