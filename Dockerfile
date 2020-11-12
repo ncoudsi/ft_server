@@ -19,6 +19,9 @@ RUN			apt-get -y install mariadb-server
 #Install libnss3 for mkcert.
 RUN			apt-get -y install libnss3-tools
 
+#Defines environement variable INDEX and set its value.
+ENV			INDEX=on
+
 #Copy srcs in container's root.
 COPY		srcs /root/
 

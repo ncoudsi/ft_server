@@ -41,5 +41,16 @@ service nginx start
 /etc/init.d/php7.3-fpm start
 /etc/init.d/php7.3-fpm status
 
+#Runs set_index.sh depending on environement variable INDEX.
+if [ $INDEX = "on" ]
+then
+	bash scripts/set_index.sh y
+elif [ $INDEX = "off" ]
+then
+	bash scripts/set_index.sh n
+else
+	echo "Only on or off values are expected."
+fi
+
 #Prints the last lines of Nginx's logs and maintains the container running.
 tail -f /var/log/nginx/access.log /var/log/nginx/error.log
