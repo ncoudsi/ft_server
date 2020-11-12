@@ -23,7 +23,7 @@ https://en.wikipedia.org/wiki/WordPress <br/>
 
 **DOCKERFILE.** <br/>
 
-First things first, you need to create a DOCKERFILE, wich is, in some ways, similar to a Makefile. It's a file that allows you to set some parameters for the container you want to build.
+First things first, you need to create a Dockerfile, wich is, in some ways, similar to a Makefile. It's a file that allows you to set some parameters for the container you want to build.
 Open my Dockerfile, I'll go through each line to explain it.
 
 **line 2 :** `FROM		  debian:buster-slim` <br/>
@@ -66,7 +66,7 @@ You can now see the IP adress of the container with the following command : <br/
 `ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'` <br/>
 Then, you can go to your web browser and type the IP. It should a page with something like "Welcome to NGINX". If it does not, go back throught the first steps.
 That way you verified 2 things : the container builds propely, and Nginx is working as intended. We will check the other softwares later on. <br/>
-Back to the DOCKERFILE : <br/>
+Back to the Dockerfile : <br/>
 
 **line 23 :** `ENV			INDEX=on` <br/>
 It creates and sets an environement variable. It will be usefull later on, to be able to activate or not the index on the website. <br/>
@@ -80,7 +80,7 @@ Define the directory you want to be in when you run your container. <br/>
 **line 32 :** `ENTRYPOINT	["bash", "scripts/container_setup.sh"]` <br/>
 Runs a script to configure the container. <br/>
 
-That is it for the DOCKERFILE, as shown on the last line, you lastly run a script to configure your container, that is the next thing I will explain.<br/>
+That is it for the Dockerfile, as shown on the last line, you lastly run a script to configure your container, that is the next thing I will explain.<br/>
 
 **CONTAINER_SETUP.SH** <br/>
 Open this script srcs/scripts/container_setup.sh, and I'll go through each line again. Understand that from now on, every command line is happening in the container, not in your computer. <br/>
