@@ -89,3 +89,36 @@ Open this script srcs/scripts/container_setup.sh, and I'll go through each line 
 Create a directory, named localhost in wich we will we will put different files and directories to configure the website.<br/>
 
 **line 7 :** `cp nginx/nginx.conf /etc/nginx/sites-available/localhost` <br/>
+Copy your nginx.conf in the sites-available directory and rename it as localhost (or the name you chose earlier). Before we go further, let's have a look
+to nginx.conf file.<br/>
+
+**NGINX.CONF**<br/>
+This is the file where you will put all the instructions for nginx to run as you expect. Since my understanding of it is limited, you can find
+more precises informations here : http://nginx.org/en/docs/beginners_guide.html <br/>
+
+**line 1-9 :** 'server{...}' <br/>
+That is a context, called server. A context is a group of directives with a scope (context{scope of the context}). The "server" context
+sets configuration for a virtual server. <br/>
+
+**line 3 :** 'listen 80;' <br/>
+Set the port on wich the server accepts requests. Port 80 is used for HTTP. <br/>
+If you are asking yourself : "What is a request ?", this link has been really usefull to me : https://www.codecademy.com/articles/http-requests <br/>
+The web is a wide and hard to approach subject, and going in this exercise without any knowledge can be overwelming, but don't hesitate to look
+around on the internet, you will find all the knowledge you need.<br/>
+
+**line 4 :** 'listen [::]:80;' <br/>
+Same as previous line, but the [::] specifies that we talk about an IPV6 address. <br/>
+Here some informations about IPV adresses : <br/>
+https://en.wikipedia.org/wiki/IPv6 <br/>
+https://en.wikipedia.org/wiki/IPv4 <br/>
+
+**line 6 :** 'server_name 172.17.0.2;' <br/>
+Define a name for your server. Here I put the IP adress of the container (see line 65 of this tutorial), wich is a private IP address. <br/>
+Refer to the "private addresses" section for more intels : https://en.wikipedia.org/wiki/IP_address <br/>
+server_name seems to me like a variable, you just set with a value (172.17.0.2 in this case). To call the variable later on, you need to type '$' before its name. It seems the server_name variable is always set, even if you don't use it afterwards, more as a convetion. <br/>
+
+**line 8 :** 'return 301 https://$server_name$request_uri;' <br/>
+The subject asks that we redirect from HTTP to HTTPS when needed, this is exactly what you do here. <br/>
+You can find many posts about return 301, but since I didn't find any that seemed precise and clear to me, I won't put any links in here. Hopefully you will find better links than me. If you ask yourself about the "request_uri" part, you can find some knowledge here : <br/>
+https://dev.to/flippedcoding/what-is-the-difference-between-a-uri-and-a-url-4455 <br/>
+https://en.wikipedia.org/wiki/Uniform_Resource_Identifier (a bit harsh) <br/>
