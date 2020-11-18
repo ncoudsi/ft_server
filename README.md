@@ -40,7 +40,7 @@ Install Nginx, this will be your web server in this project. <br/>
 **line 14 :** `RUN                      apt-get -y install php php-cli php-cgi php-mbstring php-fpm php-mysql` <br/>
 Install PHP, you will use PhpMyAdmin as an administration tool for both MySQL and your Wordpress. <br/>
 
-**line 17 :** `RUN                      apt-get -y install mariadb-server` <br/>  
+**line 17 :** `RUN                      apt-get -y install mariadb-server` <br/> 
 Install MariaDB. It is a fork of MySQL, and will be your database management tool. <br/>
 
 **line 20 :** `RUN                      apt-get -y install libnss3-tools` <br/> 
