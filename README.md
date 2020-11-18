@@ -57,9 +57,9 @@ You can add to these (for more uses) : <br/>
 `docker exec` <br/>
 `docker kill` <br/>
 The very basic test you can do is : <br/>
-`docker build . -t name_of_your_image` <br/>
+`docker build . -t your_image_name` <br/>
 See if it builds properly. Then : <br/>
-`docker run -ti name_of_your_image` <br/>
+`docker run -ti your_image_name` <br/>
 The container should be running and with the -i option you should be on the container's terminal.
 You can now see the IP adress of the container with the following command : <br/>
 `ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'` <br/>
@@ -217,3 +217,15 @@ I won't go through all the lines here since it's a pretty simple condition, just
 
 **line 56 :** `tail -f /var/log/nginx/access.log /var/log/nginx/error.log` <br/>
 Displays in the container's terminal the last entries of the `access.log` and `error.log` files. Has a double purpuse here : being able to see the actual logs, and maintaining your container running. You have other options to maintain your container running, but if you don't put any command line to do so, your container will shut down as soon as it arrives to the end of the `container_setup.sh` script. <br/>
+
+You are now finished with all the configuration files and scripts, but you still have a few steps before your project is finished. Double check that everything is working so far, and if it's not, go back through your files to fix it before going any further. From now on, it will be less laborious since everything will be done from your web browser. <br/>
+You will firstly configure your wordpress, then download the `wordpress.sql` file from your `php_my_admin` space so you don't need to re-configure the wordpress each time you run your container. <br/>
+-Build, then run your container.<br/>
+-Go to your web browser, type your web site's address, here : `http://172.17.0.2` (double check that it redirects to `https`).<br/>
+-Since autoindex is on, click on the `wordpress` link. You should now be on the "Wordpress installation" page. You can now provide the informations related to your web site.<br/>
+-You can now log in as the administrator with the username and password you just provided. <br/>
+-From now on, you can customize your site with wordpress as you wish. <br/>
+-When your customisation is done, go to `http://172.17.0.2/php_my_admin` and log in with the logs from your `container_setup.sh` (here `wordpress` as a user and `password` as a password).<br/>
+-You are now in your php_my_admin dashboard. On the left hand of the screen you should see a link called `wordpress`. Simply click on it and then click `export` (top of the screen), then `go` without changing any option. This will download the `wordpress.sql` file you need to save your wordpress configuration. Put this file in `srcs/wordpress/` directory (if you kepts the same directories as I have of course). This way, if you shut down your container and run it again later on, it will use this file as a wordpress configuration file (`line 197` of this tutorial).<br>
+
+You are basicly done with this project, I hope this tutorial has been usefull to you. Again, don't take everything I wrote for granted since my understanding of this subject is pretty limited. Experiment, lurk on internet and most of all, enjoy !
