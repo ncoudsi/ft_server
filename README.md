@@ -195,4 +195,25 @@ Grant all privileges to the user. <br/>
 Apply the newly changer privileges. <br/>
 
 **line 27 :** `mysql wordpress -u root < /var/www/localhost/wordpress/wordpress.sql` <br/>
-Define `wordpress.sql` as the file to refer to when it comes to wordpress configuration. You don't have this file yet, but you will download it after<br/>
+Define `wordpress.sql` as the file to refer to when it comes to wordpress configuration. You don't have this file yet, but you will download it in your `php_my_admin` space after you configured your wordpress directly in your web browser (I will go throught these steps after this script). <br/>
+
+**lines 30-34 :** <br/>
+I feel like it is not necessary to go throught each line, so to summerize it, you run `mkcert` to make a SSL certificate for your website. <br/>
+
+**line 37 :** `service nginx reload` <br/>
+You reload Nginx to apply the new `nginx.conf` file you made earlier. <br/>
+
+**line 38 :** `service nginx start` <br/>
+You now start `Nginx`, with the right configuration file. <br/>
+
+**line 42 :** `/etc/init.d/php7.3-fpm start` <br/>
+You start `php`. <br/>
+
+**line 43 :** `/etc/init.d/php7.3-fpm status` <br/>
+You simply display the status of `php` to be sure that it's running as intended. <br/>
+
+**lines 45-53 :** <br/>
+I won't go through all the lines here since it's a pretty simple condition, just notice that if the environement variable `INDEX` (`line 70` of this tutorial) is `on`, you run the `set_index.sh` script with `y` argument, if it's `off`, you run it with `n` argument, otherwise you just display a message to indicate the values expected for `INDEX`. You can take a quick look at the `set_index.sh` script. Since it's a very simple one, I won't go through each line, but you can notice that, depending on the argument, it swaps `autoindex on` with `autoindex off` and display the result in the terminal. Now you may ask yourself "How do I change INDEX's value ?" well when it comes to run your container, you can add the `-e` option to your command, followed by `VARIABLE_NAME=value`. Test this command (don't forget to build first) : `docker run -e INDEX=off -ti your_image_name`. You should see in the terminal, `---> Index disabled.`<br/>
+
+**line 56 :** `tail -f /var/log/nginx/access.log /var/log/nginx/error.log` <br/>
+Displays in the container's terminal the last entries of the `access.log` and `error.log` files. Has a double purpuse here : being able to see the actual logs, and maintaining your container running. You have other options to maintain your container running, but if you don't put any command line to do so, your container will shut down as soon as it arrives to the end of the `container_setup.sh` script. <br/>
