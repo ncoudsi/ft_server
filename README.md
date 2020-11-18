@@ -22,17 +22,17 @@ https://en.wikipedia.org/wiki/PHP <br/>
 https://en.wikipedia.org/wiki/WordPress <br/>
 
 **DOCKERFILE.** <br/>
-First things first, you need to create a Dockerfile, wich is, in some ways, similar to a Makefile. It's a file that allows you to set some parameters for the container you want to build.
+First things first, you need to create a Dockerfile, which is, in some ways, similar to a Makefile. It's a file that allows you to set some parameters for the container you want to build.
 Open my Dockerfile, I'll go through each line to explain it.
 
 **line 2 :** `FROM		  debian:buster-slim` <br/>
-Define wich OS will be installed in the container you are building.<br/>
+Define which OS will be installed in the container you are building.<br/>
 
 **line 5 :** `RUN			apt-get -y update` <br/>
 Update the container's system and installed programs.  
 
 **line 8-9 :** `RUN			apt-get -y install wget` <br/>
-Install wget, wich will be usefull later on to make the SSL certificate. <br/>
+Install wget, which will be usefull later on to make the SSL certificate. <br/>
 
 **line 11 :** `RUN			apt-get -y install nginx` <br/>
 Install Nginx, this will be your web server in this project. <br/>
