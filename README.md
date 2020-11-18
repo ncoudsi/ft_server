@@ -44,7 +44,7 @@ Install PHP, you will use PhpMyAdmin as an administration tool for both MySQL an
 Install MariaDB. It is a fork of MySQL, and will be your database management tool. <br/>
 
 **line 20 :** `RUN                      apt-get -y install libnss3-tools` <br/> 
-Insall libnss3-tools, wich will be usefull later on to make the SSL certificate. <br/>
+Install libnss3-tools, which will be usefull later on to make the SSL certificate. <br/>
 
 At this point, you have installed all the packages you need to run your container properly. I recommend you to do some testing here before going further. <br/>
 You will find all the docker commands here : <br/>
