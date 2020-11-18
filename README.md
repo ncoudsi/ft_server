@@ -122,3 +122,26 @@ The subject asks that we redirect from HTTP to HTTPS when needed, this is exactl
 You can find many posts about return 301, but since I didn't find any that seemed precise and clear to me, I won't put any links in here. Hopefully you will find better links than me. If you ask yourself about the "request_uri" part, you can find some knowledge here : <br/>
 https://dev.to/flippedcoding/what-is-the-difference-between-a-uri-and-a-url-4455 <br/>
 https://en.wikipedia.org/wiki/Uniform_Resource_Identifier (a bit harsh) <br/>
+
+**line 11-36 :** `server{...}` <br/>
+Another server context, HTTPS oriented. Here is a usefull link : http://nginx.org/en/docs/http/configuring_https_servers.html
+
+**line 13 :** `listen 443 ssl;` <br/>
+This time, listen to the port 443, wich is used for HTTPS, with the SSL protocol. Here is a quick definition of SSL : https://www.websecurity.digicert.com/security-topics/what-is-ssl-tls-https <br/>
+
+**line 14 :** `listen [::]:443 ssl;` <br/>
+Like last time, you precise with the `[::]` that you listen to IPV6 addresses. <br/>
+
+**line 16 :** `ssl_certificate /root/ssl/localhost.pem;` <br/>
+Specify where to find your SSL certificate. <br/>
+
+**line 17 :** `ssl_certificate_key /root/ssl/localhost-key.pem;` <br/>
+Specify where to find your SSL key. Both of these lines are mandatory for Nginx's master process to be able to find SSL related informations.<br/>
+
+**line 19 :** `server_name 172.17.0.2;` <br/>
+Like in the previous server context, specify a server name. Here, you won't use it at all, you could event delete this line, but as said earlier, it is set most of the time as a convention. <br/>
+
+**line 21 :** `autoindex on;` <br/>
+Set the autoindex. When it's on, you will see, on your website's main page, hypertexts links which redirect to your services URL. <br/>
+
+**line 23 :** `root /var/www/localhost;` <br/>
