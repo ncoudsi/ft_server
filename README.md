@@ -96,7 +96,7 @@ This is the file where you will put all the instructions for nginx to run as you
 more precises informations here : http://nginx.org/en/docs/beginners_guide.html <br/>
 
 **lines 1-9 :** `server{...}` <br/>
-That is a context, called `server`. A context is a group of directives with a scope (context{scopeof the context}). The `server` context
+That is a context, called `server`. A context is a group of directives with a scope (context{scope of the context}). The `server` context
 sets configuration for a virtual server. <br/>
 
 **line 3 :** `listen 80;` <br/>
