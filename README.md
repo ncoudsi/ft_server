@@ -171,4 +171,28 @@ Move your wordpress directory to `var/www/localhost/` directory. Remember, `line
 Same operation, with `php_my_admin` directory. <br/>
 
 **lines 17-18 :** <br/>
-Let's skip these lines for now, it is a little trick I found (there are probably cleaner and easier way to do it), to put images in the wordpress of the website. I'll talk about it later on when talking about the wordpress. <br/>
+Let's skip these lines for now, it is a little trick I found (there are probably cleaner and easier ways to do it), to put images in the wordpress of the website. I'll talk about it later on when talking about the wordpress. <br/>
+
+**lines 21-27 :** <br/>
+The following lines are related to MySQL configuration. You can find every explainations to configure it properly here : https://dev.mysql.com/doc/mysql-getting-started/en/ , still, I will go throught each line.<br/>
+
+**line 21 :** `service mysql start` <br/>
+Start the `mysql` service. <br/>
+
+**line 22 :** `echo "CREATE DATABASE wordpress;" | mysql -u root` <br/>
+Create a new `database` called `wordpress`. It can seem awkward to use `echo` and `|` instead of just typing the command line, here is why you have to do it this way : if you were to type `mysql -u root` directly in a terminal, it would redirect you in a "menu" for `mysql` configuration. In this menu, you would type, as a second and separated command `CREATE DATABASE wordpress;` wich would be understood not by your bash terminal but by the mysql process. Since the script runs commands directly in your container's terminal, and nowhere else, if you separate the command line in two lines like this : `mysql -u root` then `CREATE DATABASE wordpress;` it would firstly open the mysql "menu", then run the second command in your container's terminal and it wouldn't know what to do with it. Using the pipe is the way to work around this limitation by redirecting the `echo` output as a `mysql -u root` input. You will use this process for all the following commands.<br/>
+
+**line 23 :** `echo "CREATE USER 'wordpress'@'localhost';" | mysql -u root` <br/>
+Create a new user called `wordpress'@'localhost`. <br/>
+
+**line 24 :** `echo "SET password FOR 'wordpress'@'localhost' = password('password');" | mysql -u root` <br/>
+Set a password (here `password` > FULLY SECURED) for the user you just created. <br/>
+
+**line 25 :** `echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY 'password';" | mysql -u root` <br/>
+Grant all privileges to the user. <br/>
+
+**line 26 :** `echo "FLUSH PRIVILEGES;" | mysql -u root` <br/>
+Apply the newly changer privileges. <br/>
+
+**line 27 :** `mysql wordpress -u root < /var/www/localhost/wordpress/wordpress.sql` <br/>
+Define `wordpress.sql` as the file to refer to when it comes to wordpress configuration. You don't have this file yet, but you will download it after<br/>
