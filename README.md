@@ -14,7 +14,7 @@ https://docs.docker.com/develop/develop-images/dockerfile_best-practices/ <br/>
 LEMP is a software stack. In other words, it is  a group of softwares you put together to work one with each other.
 LEMP stands for : Linux, Nginx ('E' of LEMP goes for "Engine X"), MySQL, Php.
 In addition of the LEMP stack, you will also need to install Wordpress.
-If you don't know some of these softwares, check out these links : <br/>
+If you don't know some of these softwares, check out these links before starting : <br/>
 https://en.wikipedia.org/wiki/Linux <br/>
 https://en.wikipedia.org/wiki/Nginx <br/>
 https://en.wikipedia.org/wiki/MySQL <br/>
@@ -22,7 +22,6 @@ https://en.wikipedia.org/wiki/PHP <br/>
 https://en.wikipedia.org/wiki/WordPress <br/>
 
 **DOCKERFILE.** <br/>
-
 First things first, you need to create a Dockerfile, wich is, in some ways, similar to a Makefile. It's a file that allows you to set some parameters for the container you want to build.
 Open my Dockerfile, I'll go through each line to explain it.
 
@@ -96,7 +95,7 @@ to nginx.conf file.<br/>
 This is the file where you will put all the instructions for nginx to run as you expect. Since my understanding of it is limited, you can find
 more precises informations here : http://nginx.org/en/docs/beginners_guide.html <br/>
 
-**line 1-9 :** `server{...}` <br/>
+**lines 1-9 :** `server{...}` <br/>
 That is a context, called server. A context is a group of directives with a scope (context{scope of the context}). The "server" context
 sets configuration for a virtual server. <br/>
 
@@ -123,7 +122,7 @@ You can find many posts about return 301, but since I didn't find any that seeme
 https://dev.to/flippedcoding/what-is-the-difference-between-a-uri-and-a-url-4455 <br/>
 https://en.wikipedia.org/wiki/Uniform_Resource_Identifier (a bit harsh) <br/>
 
-**line 11-36 :** `server{...}` <br/>
+**lines 11-36 :** `server{...}` <br/>
 Another server context, HTTPS oriented. Here is a usefull link : http://nginx.org/en/docs/http/configuring_https_servers.html
 
 **line 13 :** `listen 443 ssl;` <br/>
@@ -142,6 +141,34 @@ Specify where to find your SSL key. Both of these lines are mandatory for Nginx'
 Like in the previous server context, specify a server name. Here, you won't use it at all, you could event delete this line, but as said earlier, it is set most of the time as a convention. <br/>
 
 **line 21 :** `autoindex on;` <br/>
-Set the autoindex. When it's on, you will see, on your website's main page, hypertexts links which redirect to your services URL. <br/>
+Set the autoindex. When it's on, you will see, on your website's main page, hypertexts links which redirect to your services URL. Do you remember, `line 71` of this tutorial, when you set an environement variable `INDEX` in the Dockerfile ? Its use will be to turn `on` or `off` this autoindex (we will have a look to its script later on).<br/>
 
 **line 23 :** `root /var/www/localhost;` <br/>
+Define the root directory of your website. If in your web browser, you type `http://server_name/example_url` you will find its related files in `var/www/localhost/example_url`. It is most likely better explained here : http://nginx.org/en/docs/http/ngx_http_core_module.html#root <br/>
+
+**line 24 :** `index index.php index.html index.htm;` <br/>
+Define all the files that can be used as indexes. See : http://nginx.org/en/docs/http/ngx_http_index_module.html <br/>
+
+**lines 26-29 :** `location /{...}` <br/>
+A `location` context. It sets configuration, depending on a URI. Here, you can see the `/` after location, indication that any request is affected. I'll try to explain it here : if we have `location /wordpress/ {...}` any directive within the scope of this context will concern only requests from `your_website/wordpress/whatever` URIs. Since we have here only `location /{...}`, any directive within the scope of this context will concern requests from `your_website/whatever` URIs, in other words, all requests regarding your website. I hope I don't make too many mistakes in this explaination, however, you can find what you need to know here : http://nginx.org/en/docs/http/ngx_http_core_module.html#location <br/>
+
+**line 28 :** `try_files $uri $uri/ =404;` <br/>
+Check for files, if the `$uri` does not exist, look for `$uri/` (same name but look for a directory), if it still does not exist, it means you are looking for something you don't have, so you can return a 404 error. Here is a usefull link to understand how `try_files` works and why it's cleaner than `if` : https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/ (this page is not entirely dedicated to `try_files`, so type `try_files` in the search bar (ctrl+f on linux)) <br/>
+
+**lines 31-35 :** `location ~ \.php${...}` <br/>
+Another `location` context, this time, followed by `~ \.php$` wich means, in simple words, any `.php` file. The following directives will only concern the `.php` related requests. Unfortunatly, I still don't have a good enought understanding of the 2 directives within this context to explain them properly, but consider that they both precise which files to look for to make it all work :P<br/>
+
+And here comes the end of the `nginx.conf` files. This is an important and big part for the project, if some things are still not clear to you, don't hesitate to go through the previous lines and links again. We can now come back to the `container_setup.sh` script. As a reminder, it is the script that runs at the start of the container, to configure it properly. <br/>
+
+**CONTAINER_SETUP.SH** <br/>
+**line 10 :** `ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/` <br/>
+Link the `nginx.conf` file to the `sites-enabled/` directory so it becomes the configuration file for your website. Note that this change will be effective only after you reload Nginx. <br/>
+
+**line 13 :** `mv wordpress /var/www/localhost/` <br/>
+Move your wordpress directory to `var/www/localhost/` directory. Remember, `line 146` of this tutorial, you set this directory as the `root` for your website. So it makes sense that you now move your services in it sot they are accessible. <br/>
+
+**line 14 :** `mv php_my_admin /var/www/localhost/` <br/>
+Same operation, with `php_my_admin` directory. <br/>
+
+**lines 17-18 :** <br/>
+Let's skip these lines for now, it is a little trick I found (there are probably cleaner and easier way to do it), to put images in the wordpress of the website. I'll talk about it later on when talking about the wordpress. <br/>
