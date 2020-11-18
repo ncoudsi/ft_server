@@ -141,7 +141,7 @@ Specify where to find your SSL key. Both of these lines are mandatory for Nginx'
 Like in the previous server context, specify a server name. Here, you won't use it at all, you could event delete this line, but as said earlier, it is set most of the time as a convention. <br/>
 
 **line 21 :** `autoindex on;` <br/>
-Set the autoindex. When it's on, you will see, on your website's main page, hypertexts links which redirect to your services URL. Do you remember, `line 71` of this tutorial, when you set an environement variable `INDEX` in the Dockerfile ? Its use will be to turn `on` or `off` this autoindex (we will have a look to its script later on).<br/>
+Set the autoindex. When it's on, you will see, on your website's main page, hypertexts links which redirect to your services URLs. Do you remember, `line 71` of this tutorial, when you set an environement variable `INDEX` in the Dockerfile ? Its use will be to turn `on` or `off` this autoindex (we will have a look to its script later on).<br/>
 
 **line 23 :** `root /var/www/localhost;` <br/>
 Define the root directory of your website. If in your web browser, you type `http://server_name/example_url` you will find its related files in `var/www/localhost/example_url`. It is most likely better explained here : http://nginx.org/en/docs/http/ngx_http_core_module.html#root <br/>
