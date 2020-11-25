@@ -190,7 +190,7 @@ Set a password (here `password` --->100% SECURED) for the user you just created.
 
 **line 25 :** `echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY 'password';" | mysql -u root` <br/>
 Grant all privileges to the user. <br/>
-
+test lol
 **line 26 :** `echo "FLUSH PRIVILEGES;" | mysql -u root` <br/>
 Apply the newly changed privileges. <br/>
 
@@ -228,4 +228,4 @@ You will firstly configure your wordpress, then download the `wordpress.sql` fil
 -When your customisation is done, go to `http://172.17.0.2/php_my_admin` and log in with the logs from your `container_setup.sh` (here `wordpress` as a user and `password` as a password).<br/>
 -You are now in your `php_my_admin dashboard`. On the left hand of the screen you should see a link called `wordpress`. Simply click on it and then click `export` (top of the screen), then `go` without changing any option. This will download the `wordpress.sql` file you need to save your wordpress configuration. Put this file in `srcs/wordpress/` directory (if you kept the same directories as I have of course). This way, if you shut down your container and run it again later on, it will use this file as a wordpress configuration file (`line 197` of this tutorial).<br>
 
-You are basicly done with this project, I hope this tutorial has been usefull to you. Again, don't take everything I wrote for granted since my understanding of this subject is pretty limited. Experiment, lurk on internet and most of all, enjoy !
+You are basicly done with this project, I hope this tutorial has been usefull to you. Again, don't take everything I wrote for granted since my understanding of this subject is pretty limited. Experiment, lurk on internet and most of all, enjoy !test
